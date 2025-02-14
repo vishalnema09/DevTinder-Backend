@@ -1,0 +1,12 @@
+node_modules
+
+# Ignore OneDrive sync conflicts
+*.tmp
+*.~*
+*.lnk
+~$*
+
+# Ignore OneDrive metadata
+.DS_Store
+desktop.ini
+Thumbs.db
