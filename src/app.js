@@ -4,27 +4,26 @@ const app = express();
 
 const {adminAuth, userAuth}= require("./middlewares/auth")
 
-
-// for multiple use routes
-app.get("/admin", adminAuth);
-// app.get("/user", userAuth);
-
-
-//if the user is authenticated is not specified
-app.get("/user/login",(req , res)=>{
-    res.send("logged in successfully");
+app.use("/", (err, req, res, next) => {
+    if(err){
+        res.status(401).send("Unauthorized access");
+    }
+});
+app.get("/getUserData", (req,res)=>{
+    // try{
+        throw new Error("shfjhsdjkhfkjl");
+        res.send("User data");
+//     }
+//     catch(err){
+//         res.status(504).send("something wrong")
+//     }
 });
 
-// for single use routes
-
-app.get("/user",userAuth ,(req , res)=>{
-    res.send("this is a user details");
-});
-app.get("/admin/getAllData",(req , res)=>{
-    res.send("get all data")
-});
-app.get("/admin/deleteUser",(req , res)=>{
-    res.send("user data deleted")
+// wildcard error handling
+app.use("/", (err, req, res, next) => {
+    if(err){
+        res.status(500).send("something went wrong");
+    }
 });
 app.listen(7777, () => {
   console.log("Server is running on port 7777");
