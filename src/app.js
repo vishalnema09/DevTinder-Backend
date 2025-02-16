@@ -1,30 +1,36 @@
 const express = require("express");
-
+const connectDB  = require("./config/dababase")
 const app = express();
+const User = require("./models/user");
 
-const {adminAuth, userAuth}= require("./middlewares/auth")
 
-app.use("/", (err, req, res, next) => {
-    if(err){
-        res.status(401).send("Unauthorized access");
+app.post("/signup", async (req,res)=>{
+    const user = new User({
+        firstName:"ranveer",
+        lastName:"singh",
+        emailID:"ranveer@gmail.com",
+        password:"1235556"
+    });
+
+    //error handling
+    try{
+        await user.save();
+        res.send("User added successfully");
+    } catch (err){
+        res.status(500).send("error saving user" + err.message);
     }
-});
-app.get("/getUserData", (req,res)=>{
-    // try{
-        throw new Error("shfjhsdjkhfkjl");
-        res.send("User data");
-//     }
-//     catch(err){
-//         res.status(504).send("something wrong")
-//     }
+
+    
 });
 
-// wildcard error handling
-app.use("/", (err, req, res, next) => {
-    if(err){
-        res.status(500).send("something went wrong");
-    }
-});
-app.listen(7777, () => {
-  console.log("Server is running on port 7777");
-});
+
+connectDB()
+  .then(() => {
+    console.log("Connected to MongoDB");
+    app.listen(7777, () => {
+        console.log("Server is running on port 7777");
+      });
+  })
+  .catch((err) => {
+    console.log("Failed to connect to MongoDB");
+  });
