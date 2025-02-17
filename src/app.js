@@ -25,10 +25,31 @@ app.post("/signup", async (req, res) => {
       firstName,
       lastName,
       emailID,
-      password : hashedPassword,
+      password: hashedPassword,
     });
     await user.save();
     res.send("User registered successfully");
+  } catch (err) {
+    res.status(500).send("Server Error " + err.message);
+  }
+});
+
+app.post("/login", async (req, res) => {
+  try {
+    const { emailID, password } = req.body;
+
+    const user = await User.findOne({ emailID: emailID });
+    if (!user) {
+      throw new Error("invalid credentials");
+    }
+
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+
+    if (isPasswordValid) {
+      res.send("login success");
+    } else {
+      throw new Error("invalid credentials");
+    }
   } catch (err) {
     res.status(500).send("Server Error " + err.message);
   }
