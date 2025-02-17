@@ -1,31 +1,26 @@
 require('dotenv').config()
 const express = require("express");
-const connectDB = require("./config/db");
-
-
+const connectDB = require(".config/database");
 const app = express();
-const User = require("./models/user");
+const User  = require("./models/user");
+const {adminAuth, userAuth}= require("./middlewares/auth")
 
 
-app.post("/signup", async (req,res)=>{
+app.post("/signup", async (req , res)=>{
     const user = new User({
-        firstName:"ranveer",
-        lastName:"singh",
-        emailID:"ranveer@gmail.com",
-        password:"1235556"
+        firstName: "harsh",
+        lastName: "pathak",
+        email: "harsh@gmail.com",
+        password: "123456"
     });
 
-    //error handling
     try{
         await user.save();
-        res.send("User added successfully");
-    } catch (err){
-        res.status(500).send("error saving user" + err.message);
+        res.send("User registered successfully");
+    } catch(err){
+        res.status(500).send("Server Error"+ err.message);
     }
-
-    
 });
-
 
 connectDB()
   .then(() => {
