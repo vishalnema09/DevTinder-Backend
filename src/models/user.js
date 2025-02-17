@@ -1,22 +1,53 @@
 const mongoose = require('mongoose');
-const userSchema = new mongoose.Schema({
-    firstName :{
+const userSchema = new mongoose.Schema(
+    {
+      firstName: {
         type: String,
-    },
-    lastName :{
+        required: true,
+        minLength: 4,
+        maxLength: 50,
+      },
+      lastName: {
         type: String,
-    },
-    emailID :{
+      },
+      emailID: {
         type: String,
-    },
-    password :{
+        lowercase: true,
+        required: true,
+        unique: true,
+        trim: true,
+      },
+      password: {
         type: String,
-    },
-    age:{
+        required: true,
+      },
+      age: {
         type: Number,
-    },
-    gender:{
+        min: 18,
+      },
+      gender: {
         type: String,
+        validate(value) {
+          if (!["male", "female", "others"].includes(value)) {
+            throw new Error("Gender data is not valid");
+          }
+        },
+      },
+      photoUrl: {
+        type: String,
+        default: "https://geographyandyou.com/images/user-profile.png",
+      },
+      about: {
+        type: String,
+        default: "This is a default about of the user!",
+      },
+      skills: {
+        type: [String],
+      },
     },
-});
-module.exports = mongoose.model("User", userSchema);
+    {
+      timestamps: true,
+    }
+  );
+  
+  module.exports = mongoose.model("User", userSchema);
