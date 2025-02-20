@@ -18,3 +18,6 @@ post/request/review/rejected/requestID
 get/user/connection
 get/user/request
 get/user/feed  
+
+
+Status : ignore , interested , accepted , rejected

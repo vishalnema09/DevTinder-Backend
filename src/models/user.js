@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema(
     firstName: {
       type: String,
       required: true,
+      index : true,
       minLength: 4,
       maxLength: 50,
     },
@@ -18,12 +19,22 @@ const userSchema = new mongoose.Schema(
       type: String,
       lowercase: true,
       required: true,
-      unique: true,
+      unique: true,//index
       trim: true,
+      validate(value) {
+        if (!validator.isEmail(value)) {
+          throw new Error("Invalid email address");
+        }
+      }
     },
     password: {
       type: String,
       required: true,
+      validate(value) {
+        if (!validator.isPassword(value)) {
+          throw new Error("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character");
+        }
+      }
     },
     age: {
       type: Number,
@@ -31,11 +42,13 @@ const userSchema = new mongoose.Schema(
     },
     gender: {
       type: String,
-      validate(value) {
-        if (!["male", "female", "others"].includes(value)) {
-          throw new Error("Gender data is not valid");
-        }
-      },
+      enum: ["male", "female", "other"],
+      message: `{value} is not a valid gender`,
+      // validate(value) {
+      //   if (!["male", "female", "others"].includes(value)) {
+      //     throw new Error("Gender data is not valid");
+      //   }
+      // },
     },
     photoUrl: {
       type: String,
