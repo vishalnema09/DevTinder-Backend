@@ -48,7 +48,8 @@ requestRouter.post(
       const data = await connectionRequest.save();
 
       res.json({
-        message: req.user.firstName + "is" + status + "in" + toUserID,
+        message:
+          req.user.firstName + " is " + status + " in " + toUser.firstName,
         data,
       });
     } catch (err) {
@@ -83,7 +84,7 @@ requestRouter.post(
 
       connectionRequest.status = status;
 
-      const data = await connectionRequest.save(); 
+      const data = await connectionRequest.save();
 
       res.json({ message: "Connection request " + status, data });
     } catch (err) {
