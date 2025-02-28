@@ -5,7 +5,7 @@ const userAuth = async (req, res, next) => {
   try {
     const { token } = req.cookies;
     if (!token) {
-      throw new Error("not authenticated");
+      return res.status(401).send("please login");
     }
 
     const decodedOjb = await jwt.verify(token, "DEV@TINDER$790");

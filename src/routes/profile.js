@@ -22,6 +22,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
     const loggedInUser = req.user;
 
     Object.keys(req.body).forEach((key) => (loggedInUser[key] = req.body[key]));
+
     await loggedInUser.save();
 
     res.json({
@@ -29,7 +30,7 @@ profileRouter.patch("/profile/edit", userAuth, async (req, res) => {
       data: loggedInUser,
     });
   } catch (err) {
-    res.status(403).send("Unauthorized access");
+    res.status(403).send("ERROR: " + err.message);
   }
 });
 
