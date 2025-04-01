@@ -8,6 +8,9 @@ const http = require("http");
 require("dotenv").config();
 require("./utils/cronJob");
 
+require("dotenv").config();
+require("./utils/cronJob");
+
 app.use(
   cors({
     origin: "http://localhost:5173",
