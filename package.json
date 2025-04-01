@@ -24,10 +24,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.10.1",
     "node-cron": "^3.0.3",
-<<<<<<< HEAD
     "socket.io": "^4.8.1",
-=======
->>>>>>> bbc53d788b09c25021bb23190e6032bbd1439834
     "validator": "^13.12.0"
   }
 }
